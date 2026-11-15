@@ -98,9 +98,29 @@ export class ImportCommand {
     let author = await this.userService.findByEmail(offer.author.email);
 
     if (!author) {
-      author = await this.userService.create(offer.author);
+      author = await this.userService.create({
+        name: offer.author.name,
+        email: offer.author.email,
+        avatarPath: offer.author.avatarPath,
+        password: offer.author.password,
+        type: offer.author.type,
+      });
     }
 
-    await this.offerService.create({ ...offer, author: author._id });
+    await this.offerService.create({
+      title: offer.title,
+      description: offer.description,
+      publicationDate: offer.publicationDate,
+      city: offer.city,
+      previewImage: offer.previewImage,
+      photos: offer.photos,
+      isPremium: offer.isPremium,
+      type: offer.type,
+      bedrooms: offer.bedrooms,
+      guests: offer.guests,
+      price: offer.price,
+      amenities: offer.amenities,
+      coordinates: offer.coordinates,
+    }, author._id.toString());
   }
 }

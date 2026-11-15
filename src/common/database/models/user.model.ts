@@ -1,8 +1,9 @@
-import { Schema, model, type HydratedDocument } from 'mongoose';
+import { Schema, Types, model, type HydratedDocument } from 'mongoose';
 import { USER_TYPES } from '../../../constants.js';
 import type { User } from '../../../types/index.js';
 
 export interface UserEntity extends User {
+  favorites: Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -14,6 +15,7 @@ const userSchema = new Schema<UserEntity>(
     avatarPath: { type: String },
     password: { type: String, required: true },
     type: { type: String, enum: [...USER_TYPES], required: true },
+    favorites: [{ type: Schema.Types.ObjectId, ref: 'Offer' }],
   },
   {
     timestamps: true,
