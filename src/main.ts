@@ -5,7 +5,7 @@ import { container } from './container.js';
 
 try {
   const application = container.get(Application);
-  application.init();
+  await application.init();
 } catch (error) {
   const loggerService = container.get(LoggerService);
   loggerService.error('Не удалось инициализировать приложение', { err: error });

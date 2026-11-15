@@ -2,79 +2,105 @@ import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { createInterface } from 'node:readline';
 import chalk from 'chalk';
-import { formatOffer } from '../utils/format-offer.js';
+import { inject, injectable } from 'inversify';
+import { DatabaseService } from '../common/database/database.service.js';
+import type { OfferService } from '../common/database/services/offer-service.interface.js';
+import type { UserService } from '../common/database/services/user-service.interface.js';
+import { OFFER_SERVICE, USER_SERVICE } from '../common/database/tokens.js';
+import { LoggerService } from '../common/logger/logger.service.js';
 import { parseOffer } from '../utils/parse-offer.js';
 
 const printError = (message: string): void => {
   console.error(`${chalk.bgRed.white(' ОШИБКА ')} ${chalk.red(message)}`);
 };
 
-export const importData = async (filePath?: string): Promise<void> => {
-  if (!filePath) {
-    printError('Не указан путь к файлу. Используйте: --import <path>');
-    process.exitCode = 1;
-    return;
-  }
+@injectable()
+export class ImportCommand {
+  constructor(
+    @inject(DatabaseService) private readonly databaseService: DatabaseService,
+    @inject(USER_SERVICE) private readonly userService: UserService,
+    @inject(OFFER_SERVICE) private readonly offerService: OfferService,
+    @inject(LoggerService) private readonly loggerService: LoggerService,
+  ) {}
 
-  try {
-    await stat(filePath);
-  } catch {
-    printError(`Файл не найден: ${filePath}`);
-    process.exitCode = 1;
-    return;
-  }
+  public async execute(filePath?: string, dbUri?: string): Promise<void> {
+    if (!filePath || !dbUri) {
+      printError('Недостаточно аргументов. Используйте: --import <filepath> <db-uri>');
+      process.exitCode = 1;
+      return;
+    }
 
-  let lineNumber = 0;
-  let importedCount = 0;
-  let skippedLinesCount = 0;
+    try {
+      await stat(filePath);
+    } catch {
+      printError(`Файл не найден: ${filePath}`);
+      process.exitCode = 1;
+      return;
+    }
 
-  console.log(chalk.bold.cyan(`Импорт данных из файла «${filePath}»`));
-  console.log();
+    let lineNumber = 0;
+    let importedCount = 0;
+    let skippedLinesCount = 0;
+    let isConnected = false;
 
-  try {
-    const input = createReadStream(filePath, { encoding: 'utf-8' });
-    const lines = createInterface({ input, crlfDelay: Infinity });
+    console.log(chalk.bold.cyan(`Импорт данных из файла «${filePath}»`));
+    console.log();
 
-    for await (const line of lines) {
-      lineNumber += 1;
+    try {
+      await this.databaseService.connect(dbUri);
+      isConnected = true;
 
-      if (line.trim() === '') {
-        continue;
-      }
+      const input = createReadStream(filePath, { encoding: 'utf-8' });
+      const lines = createInterface({ input, crlfDelay: Infinity });
 
-      try {
-        const offer = parseOffer(line);
+      for await (const line of lines) {
+        lineNumber += 1;
 
-        if (importedCount > 0) {
-          console.log();
+        if (line.trim() === '') {
+          continue;
         }
 
-        importedCount += 1;
-        console.log(formatOffer(offer, importedCount));
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        skippedLinesCount += 1;
-        console.error(chalk.yellow(`Строка ${lineNumber} пропущена: ${message}`));
+        try {
+          await this.saveOffer(line);
+          importedCount += 1;
+        } catch (error) {
+          skippedLinesCount += 1;
+          this.loggerService.warn('Строка пропущена из-за ошибки', { lineNumber, err: error });
+        }
+      }
+    } catch (error) {
+      this.loggerService.error('Не удалось выполнить импорт данных', { err: error });
+      process.exitCode = 1;
+      return;
+    } finally {
+      if (isConnected) {
+        await this.databaseService.disconnect();
       }
     }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    printError(`Не удалось прочитать файл: ${message}`);
-    process.exitCode = 1;
-    return;
+
+    if (importedCount === 0) {
+      printError('Не удалось импортировать ни одного предложения.');
+      process.exitCode = 1;
+      return;
+    }
+
+    console.log();
+    console.log(chalk.bold.green(`Импортировано предложений: ${importedCount}`));
+
+    if (skippedLinesCount > 0) {
+      console.log(chalk.yellow(`Пропущено строк с ошибками: ${skippedLinesCount}`));
+      process.exitCode = 1;
+    }
   }
 
-  if (importedCount === 0) {
-    printError('Не удалось импортировать ни одного предложения.');
-    process.exitCode = 1;
-    return;
-  }
+  private async saveOffer(line: string): Promise<void> {
+    const offer = parseOffer(line);
+    let author = await this.userService.findByEmail(offer.author.email);
 
-  console.log();
-  console.log(chalk.bold.green(`Импортировано предложений: ${importedCount}`));
+    if (!author) {
+      author = await this.userService.create(offer.author);
+    }
 
-  if (skippedLinesCount > 0) {
-    console.log(chalk.yellow(`Пропущено строк с ошибками: ${skippedLinesCount}`));
-    process.exitCode = 1;
+    await this.offerService.create({ ...offer, author: author._id });
   }
-};
+}

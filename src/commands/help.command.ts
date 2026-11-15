@@ -4,7 +4,7 @@ export const printHelp = (): void => {
   const commands = [
     ['--version', 'выводит номер версии'],
     ['--help', 'печатает этот текст'],
-    ['--import <path>', 'импортирует данные из TSV'],
+    ['--import <path> <db-uri>', 'импортирует данные из TSV в MongoDB'],
     ['--generate <n> <path> <url>', 'генерирует произвольное количество тестовых данных'],
   ];
 
