@@ -8,8 +8,16 @@ convict.addFormats(validator);
 export interface AppConfig {
   port: number;
   dbHost: string;
+  dbPort: number;
+  dbName: string;
   salt: string;
 }
+
+const requiredStringFormat = (fieldName: string) => (value: unknown): void => {
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new Error(`Значение ${fieldName} должно быть непустой строкой`);
+  }
+};
 
 const configSchema = convict<AppConfig>({
   port: {
@@ -24,13 +32,21 @@ const configSchema = convict<AppConfig>({
     default: null,
     env: 'DB_HOST',
   },
+  dbPort: {
+    doc: 'Порт сервера базы данных',
+    format: 'port',
+    default: null,
+    env: 'DB_PORT',
+  },
+  dbName: {
+    doc: 'Имя базы данных',
+    format: requiredStringFormat('DB_NAME'),
+    default: null,
+    env: 'DB_NAME',
+  },
   salt: {
     doc: 'Соль для хеширования паролей',
-    format: (value: unknown) => {
-      if (typeof value !== 'string' || value.length === 0) {
-        throw new Error('Значение SALT должно быть непустой строкой');
-      }
-    },
+    format: requiredStringFormat('SALT'),
     default: null,
     env: 'SALT',
   },
@@ -51,6 +67,18 @@ export class ConfigService {
 
   public get dbHost(): string {
     return this.config.get('dbHost');
+  }
+
+  public get dbPort(): number {
+    return this.config.get('dbPort');
+  }
+
+  public get dbName(): string {
+    return this.config.get('dbName');
+  }
+
+  public get dbUri(): string {
+    return `mongodb://${this.dbHost}:${this.dbPort}/${this.dbName}`;
   }
 
   public get salt(): string {
