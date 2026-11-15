@@ -1,0 +1,234 @@
+{
+  "offers": [
+    {
+      "title": "Апартаменты у Эйфелевой башни",
+      "description": "Светлые апартаменты с панорамными окнами и видом на Эйфелеву башню. В пешей доступности метро, кафе и главные достопримечательности Парижа.",
+      "city": "Paris",
+      "previewImage": "/img/apartment-01.jpg",
+      "photos": [
+        "/img/apartment-01.jpg",
+        "/img/apartment-02.jpg",
+        "/img/apartment-03.jpg",
+        "/img/apartment-04.jpg",
+        "/img/apartment-05.jpg",
+        "/img/apartment-06.jpg"
+      ],
+      "isPremium": true,
+      "type": "apartment",
+      "bedrooms": 2,
+      "guests": 4,
+      "price": 6500,
+      "amenities": [
+        "Breakfast",
+        "Air conditioning",
+        "Washer",
+        "Fridge"
+      ]
+    },
+    {
+      "title": "Уютная комната в центре Парижа",
+      "description": "Небольшая, но уютная комната в тихой квартире рядом с Люксембургским садом. Идеальный вариант для короткой поездки вдвоём.",
+      "city": "Paris",
+      "previewImage": "/img/room.jpg",
+      "photos": [
+        "/img/room.jpg",
+        "/img/room-small.jpg",
+        "/img/studio-01.jpg",
+        "/img/studio-photos.jpg",
+        "/img/apartment-02.jpg",
+        "/img/apartment-03.jpg"
+      ],
+      "isPremium": false,
+      "type": "room",
+      "bedrooms": 1,
+      "guests": 2,
+      "price": 3200,
+      "amenities": [
+        "Towels",
+        "Washer",
+        "Breakfast"
+      ]
+    },
+    {
+      "title": "Просторный дом с садом в Кёльне",
+      "description": "Дом для большой семьи с пятью спальнями, собственной террасой и ухоженным садом. До центра города можно доехать на трамвае за пятнадцать минут.",
+      "city": "Cologne",
+      "previewImage": "/img/house-01.jpg",
+      "photos": [
+        "/img/house-01.jpg",
+        "/img/house-02.jpg",
+        "/img/house-03.jpg",
+        "/img/house-04.jpg",
+        "/img/house-05.jpg",
+        "/img/house-06.jpg"
+      ],
+      "isPremium": true,
+      "type": "house",
+      "bedrooms": 5,
+      "guests": 8,
+      "price": 12000,
+      "amenities": [
+        "Baby seat",
+        "Towels",
+        "Fridge",
+        "Laptop friendly workspace"
+      ]
+    },
+    {
+      "title": "Семейные апартаменты в Брюсселе",
+      "description": "Трёхкомнатные апартаменты в историческом районе Брюсселя. Во дворе есть тихий сад, а до Гран-Плас можно дойти пешком за десять минут.",
+      "city": "Brussels",
+      "previewImage": "/img/apartment-04.jpg",
+      "photos": [
+        "/img/apartment-04.jpg",
+        "/img/apartment-05.jpg",
+        "/img/apartment-06.jpg",
+        "/img/apartment-01.jpg",
+        "/img/apartment-02.jpg",
+        "/img/apartment-03.jpg"
+      ],
+      "isPremium": false,
+      "type": "apartment",
+      "bedrooms": 3,
+      "guests": 5,
+      "price": 7800,
+      "amenities": [
+        "Breakfast",
+        "Air conditioning",
+        "Laptop friendly workspace"
+      ]
+    },
+    {
+      "title": "Отель на набережной Амстердама",
+      "description": "Номер в бутик-отеле на набережной канала. Из окон открывается вид на воду, а завтрак сервируют на собственной террасе отеля.",
+      "city": "Amsterdam",
+      "previewImage": "/img/amsterdam.jpg",
+      "photos": [
+        "/img/amsterdam.jpg",
+        "/img/amsterdam@2x.jpg",
+        "/img/map.jpg",
+        "/img/map-big.jpg",
+        "/img/map@2x.jpg",
+        "/img/map-big@2x.jpg"
+      ],
+      "isPremium": true,
+      "type": "hotel",
+      "bedrooms": 1,
+      "guests": 2,
+      "price": 9500,
+      "amenities": [
+        "Breakfast",
+        "Air conditioning",
+        "Towels"
+      ]
+    },
+    {
+      "title": "Дом с террасой в Амстердаме",
+      "description": "Просторный дом в тихом районе Амстердама с большой террасой и видом на канал. В доме есть всё необходимое для комфортного отдыха с детьми.",
+      "city": "Amsterdam",
+      "previewImage": "/img/studio-photos.jpg",
+      "photos": [
+        "/img/studio-photos.jpg",
+        "/img/studio-01.jpg",
+        "/img/room.jpg",
+        "/img/room-small.jpg",
+        "/img/apartment-04.jpg",
+        "/img/apartment-06.jpg"
+      ],
+      "isPremium": false,
+      "type": "house",
+      "bedrooms": 4,
+      "guests": 6,
+      "price": 11000,
+      "amenities": [
+        "Washer",
+        "Fridge",
+        "Baby seat"
+      ]
+    },
+    {
+      "title": "Апартаменты в центре Гамбурга",
+      "description": "Современные апартаменты рядом с портом и Эльбской филармонией. В квартире есть рабочее место и быстрый интернет для удалённой работы.",
+      "city": "Hamburg",
+      "previewImage": "/img/apartment-05.jpg",
+      "photos": [
+        "/img/apartment-05.jpg",
+        "/img/apartment-01.jpg",
+        "/img/apartment-02.jpg",
+        "/img/apartment-03.jpg",
+        "/img/apartment-04.jpg",
+        "/img/apartment-06.jpg"
+      ],
+      "isPremium": true,
+      "type": "apartment",
+      "bedrooms": 2,
+      "guests": 3,
+      "price": 7100,
+      "amenities": [
+        "Air conditioning",
+        "Laptop friendly workspace",
+        "Washer"
+      ]
+    },
+    {
+      "title": "Комната в Дюссельдорфе",
+      "description": "Компактная комната в уютной квартире недалеко от старого города. Подойдёт путешественнику, который хочет остановиться на пару ночей.",
+      "city": "Dusseldorf",
+      "previewImage": "/img/room-small.jpg",
+      "photos": [
+        "/img/room-small.jpg",
+        "/img/room.jpg",
+        "/img/studio-01.jpg",
+        "/img/apartment-01.jpg",
+        "/img/apartment-02.jpg",
+        "/img/apartment-03.jpg"
+      ],
+      "isPremium": false,
+      "type": "room",
+      "bedrooms": 1,
+      "guests": 1,
+      "price": 2500,
+      "amenities": [
+        "Towels",
+        "Breakfast"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "name": "Павел Ватутин",
+      "email": "pavel.vatutin@example.com",
+      "avatarPath": "/img/avatar-max.jpg",
+      "password": "secret12",
+      "type": "pro"
+    },
+    {
+      "name": "Мария Шнайдер",
+      "email": "maria.schneider@example.com",
+      "avatarPath": "/img/avatar-angelina.jpg",
+      "password": "wanderer7",
+      "type": "ordinary"
+    },
+    {
+      "name": "Анна Лебедева",
+      "email": "anna.lebedeva@example.com",
+      "avatarPath": "/img/avatar.svg",
+      "password": "sunshine8",
+      "type": "pro"
+    },
+    {
+      "name": "Иван Петров",
+      "email": "ivan.petrov@example.com",
+      "avatarPath": "/img/avatar-max.jpg",
+      "password": "qwerty123",
+      "type": "ordinary"
+    },
+    {
+      "name": "Лиза Морозова",
+      "email": "liza.morozova@example.com",
+      "avatarPath": "/img/avatar-angelina.jpg",
+      "password": "profi2026",
+      "type": "pro"
+    }
+  ]
+}
